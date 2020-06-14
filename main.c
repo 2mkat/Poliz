@@ -5,15 +5,17 @@
 int  parse(stack* head, int sym){
     int num2 = 0;
     int x = 0;
-
     switch(sym){
         case ' ':
             break;
         case '=':
             printf("\nResult = %d", stack_pop(head, 0));
-            exit ;
+            exit;
         case '+':
-            stack_push(head,0, stack_pop(head,0) + stack_pop(head, 0));
+          //  printf("kakall");
+            num2 = stack_pop(head, 0);
+            printf("%d\n", num2);
+            stack_push(head,0, num2 + stack_pop(head, 0));
             break;
         case '-':
             stack_push(head,0, -stack_pop(head,0) + stack_pop(head, 0));
@@ -28,28 +30,32 @@ int  parse(stack* head, int sym){
                 stack_push(head, 0, stack_pop(head, 0) / stack_pop(head, 0));
                 break;
         default:
-                if (scanf("%d", &x) != 1) {
-                    return 1;
-                }
-                else {
-                    stack_push(head, 0, x);
-                }
-                break;
+            stack_push(head, 0, sym);
+            break;
     }
-    return 0;
+ /* if(sym == 12 || sym == 2){
+      stack_push(head, 0, sym);
+  }
+  if(sym == '+'){
+      stack_push(head, 0, stack_pop(head, 0) + stack_pop(head, 0));
+      printf("%d\n", stack_pop(head, 0));
+  }*/
+  return 0;
 };
 
 int main(){
     stack* head = calloc(1, sizeof(stack));
     int cur = 0;
-    int sym = 0;
+    char sym = 0;
+
     while(!feof(stdin)){
         if(fscanf(stdin, "%d", &cur) != 1){
-            sym = getchar();
+            fscanf(stdin, "%c", &sym);
             parse(head, sym);
         }
-        else
+        else {
             parse(head, cur);
+        }
     }
     return 0;
 }
