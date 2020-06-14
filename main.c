@@ -12,7 +12,6 @@ int  parse(stack* head, int sym){
             printf("\nResult = %d", stack_pop(head, 0));
             exit;
         case '+':
-          //  printf("kakall");
             num2 = stack_pop(head, 0);
             printf("%d\n", num2);
             stack_push(head,0, num2 + stack_pop(head, 0));
