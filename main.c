@@ -2,18 +2,18 @@
 #include <string.h>
 #include <stdio.h>
 
-int  parse(int sym){
+int  parse(stack* head, int sym){
     int num2 = 0;
     int x = 0;
-    stack* head = calloc(1, sizeof(stack));
 
     switch(sym){
         case ' ':
             break;
         case '=':
             printf("\nResult = %d", stack_pop(head, 0));
-            break;
+            exit ;
         case '+':
+            printf("kaka1\n");
             stack_push(head,0, stack_pop(head,0) + stack_pop(head, 0));
             break;
         case '-':
@@ -33,7 +33,7 @@ int  parse(int sym){
                     return 1;
                 }
                 else {
-                 stack_push(head, 0, x);
+                    stack_push(head, 0, x);
                 }
                 break;
     }
@@ -41,9 +41,10 @@ int  parse(int sym){
 };
 
 int main() {
+    stack* head = calloc(1, sizeof(stack));
     while(!feof(stdin)){
         int sym = getchar();
-        parse(sym);
+        parse(head, sym);
     }
     return 0;
 }
