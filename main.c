@@ -13,7 +13,6 @@ int  parse(stack* head, int sym){
             printf("\nResult = %d", stack_pop(head, 0));
             exit ;
         case '+':
-            printf("kaka1\n");
             stack_push(head,0, stack_pop(head,0) + stack_pop(head, 0));
             break;
         case '-':
@@ -40,11 +39,17 @@ int  parse(stack* head, int sym){
     return 0;
 };
 
-int main() {
+int main(){
     stack* head = calloc(1, sizeof(stack));
+    int cur = 0;
+    int sym = 0;
     while(!feof(stdin)){
-        int sym = getchar();
-        parse(head, sym);
+        if(fscanf(stdin, "%d", &cur) != 1){
+            sym = getchar();
+            parse(head, sym);
+        }
+        else
+            parse(head, cur);
     }
     return 0;
 }
