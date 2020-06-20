@@ -1,25 +1,20 @@
 #include "stack.h"
+#include "linked_list.c"
+#include <stdio.h>
 
-void stack_push(stack* st, int pos, int el){
-    for (int i = 0; i < pos; i++){
-        st = st->next;
-    }
-    stack* stack1 = calloc(1, sizeof(stack));   // create new object
-    stack1->el = el;
-    stack1->next = st->next;
-    st->next = stack1;
-};
+stack stack_new()
+{
+    linked_list* head = calloc(1, sizeof(linked_list));
+    stack res ={ .ll = head};
+    return res;
+}
 
-int stack_pop(stack* st, int pos){
-    for (int i = 0; i < pos; i++) {
-        st = st->next;
-    }
+void stack_push(stack s, int element)
+{
+    insert(s.ll, 0, element);
+}
 
-    int el = st->next->el;
-    stack* stack1 = st->next;
-    st->next = st->next->next;
-
-    free(stack1);
-
-    return el;
-};
+int stack_pop(stack s)
+{
+    return delete(s.ll, 0);
+}
