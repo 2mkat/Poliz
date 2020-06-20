@@ -1,15 +1,18 @@
-#ifndef STACK_LIBRARY_H
-#define STACK_LIBRARY_H
+#ifndef DATA_STRUCTURES__STACK_H
+#define DATA_STRUCTURES__STACK_H
 
-#include <stdlib.h>
+#include "linked_list.h"
 #include <stdio.h>
 
-typedef struct linked_list {
-    int el;     // elements of stack
-    struct linked_list* next;      // pointer to the next element
-} stack;
+struct _stack
+{
+    linked_list *ll;
+};
 
-void stack_push(stack* st, int pos, int el);
-int stack_pop(stack* st, int pos);
+typedef struct _stack stack;
 
-#endif //STACK_LIBRARY_H
+stack stack_new();
+void stack_push(stack s, int element);
+int stack_pop(stack s);
+
+#endif //DATA_STRUCTURES__STACK_H
