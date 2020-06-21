@@ -2,44 +2,67 @@
 #include <string.h>
 #include <stdio.h>
 
+#define ERR_OK 0
+#define ERR_TOO_FEW_AGS 1
+
+int bb_errno = ERR_OK;
+
+int check_mistake(stack head){
+    if(len(head.ll) < 2){
+        printf("Usage: Ammount of operand: %d\nerror: too few arguments to function. Try again", len(head.ll));
+        return ERR_TOO_FEW_AGS;
+    }
+
+}
+
 int  parse(stack head, int pos, char sym){
     int num2 = 0, current;
     if(pos == 0) {
         current = 0;
     }
      else{
-         //puts("Before pop");
          current = stack_pop(head);
-         //puts("After pop");
      }
      if(sym >= '0' && sym <= '9'){
         stack_push(head, current * 10 + sym - 48);
      }
-      switch(sym) {
-          case '\n':
-              pos = 0;
-              break;
-          case ' ':
-              break;
-          case '+':
-              stack_push(head, stack_pop(head) + stack_pop(head));
-              break;
-          case '-':
-              stack_push(head, -stack_pop(head) + stack_pop(head));
-              break;
-          case '*':
-              stack_push(head,stack_pop(head) * stack_pop(head));
-              break;
-          case '/':
-              num2 = stack_pop(head);
-              if (num2 == 0)
-                  printf("error: zero divisor\n");
-              stack_push(head, stack_pop(head) / stack_pop(head));
-              break;
-          case '=':
-              printf("\nResult = %d", stack_pop(head));
-              exit;
-      }
+     else {
+         switch (sym) {
+             case '\n':
+                 pos = -1;
+                 stack_push(head, current);
+                 break;
+             case ' ':
+                 break;
+             case '+':
+                 check_mistake(head);
+                 stack_push(head, stack_pop(head) + stack_pop(head));
+                 break;
+             case '-':
+                 check_mistake(head);
+                 num2 = stack_pop(head);
+                 stack_push(head, stack_pop(head) - num2);
+                 break;
+             case '*':
+                 check_mistake(head);
+                 stack_push(head, stack_pop(head) * stack_pop(head));
+                 break;
+             case '/':
+                 check_mistake(head);
+                 num2 = stack_pop(head);
+                 if (num2 == 0)
+                     printf("error: zero divisor\n");
+                 stack_push(head, stack_pop(head) / num2);
+                 break;
+             case '=':
+                 printf("\nResult = %d\n", stack_pop(head));
+                 exit;
+                 break;
+             default:
+                 fprintf(stderr, "\nI can't read this symbol. Write new symbol\n");     // the program doт't end
+                 return 0;
+         }
+     }
     return pos;
 };
 
@@ -50,7 +73,8 @@ int main(){
      char ch = fgetc(stdin);
 
      while(ch != EOF) {
-         parse(head, pos, ch);
+         pos = parse(head, pos, ch);
+         //int x = len(head.ll);
          ch = fgetc(stdin);
          pos++;
      }
