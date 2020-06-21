@@ -13,5 +13,7 @@ typedef struct _linked_list linked_list;
 
 void insert(linked_list* ll, int pos, int el);
 int delete(linked_list* ll, int pos);
+int len(linked_list* ll);
+void print(linked_list* head);
 
 #endif //DATA_STRUCTURES__LINKED_LIST_H
